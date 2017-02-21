@@ -1,7 +1,10 @@
 class TeamsController < ApplicationController
 
+  def index 
+    @teams = Team.all 
+  end
   def show 
-    @team = Unirest.get("#{ENV['DOMAIN']}/#{params[:id]}.json").body
+    @team = Team.find(params[:id])
   end 
 
   def new 
@@ -9,20 +12,17 @@ class TeamsController < ApplicationController
   end
 
   def create
-    @team = Unirest.post("#{ENV['DOMAIN']}.json", :headers => {"Accept" => "application/json"}, :parameters => {:creature => params[:creature], :name => params[:name], :state => params[:state], :sport => params[:sport]}).body 
     redirect_to "/teams/#{@team['id']}"
   end
 
   def update 
-    @team = Unirest.patch("#{ENV['DOMAIN']}.json", :headers => {"Accept" => "application/json"}, :parameters => {:creature => params[:creature], :name => params[:name], :state => params[:state], :sport => params[:sport]}).body
-    
+    @team = Unirest.patch("#{ENV['DOMAIN']}/teams/#{params['id']}.json", :headers => {"Accept" => "application/json"}, :parameters => {:creature => params[:creature], :name => params[:name], :state => params[:state], :sport => params[:sport]}).body  
   end
 
-
-
-  def index 
-    @teams = Unirest.get("#{ENV['DOMAIN']}.json").body
-
+  def destroy
+    @team = Team.find(params[:id])
+    @team.destroy
+    redirect_to "/teams"  
   end
 end
 
