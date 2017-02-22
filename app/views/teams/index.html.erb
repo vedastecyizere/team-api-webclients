@@ -10,7 +10,7 @@
       <td><%= team.creature %></td>
       <td><%= team.name %></td>
       <td><%= team.state %></td>
-      <td><%= team.@team = Unirest.post("#{ENV['DOMAIN']}/teams.json", :headers => {"Accept" => "application/json"}, :parameters => {:creature => params[:creature], :name => params[:name], :state => params[:state], :sport => params[:sport]}).body sport %></td> 
+      <td><%= team.sport %></td> 
     </tr>
   <% end %>
 </table>
